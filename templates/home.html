@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+    Home
+{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+        Hallo {{ user.username }}
+    {% else %}
+        Du bist nicht authentifiziert.
+    {% endif %}
+
+{% endblock %}
