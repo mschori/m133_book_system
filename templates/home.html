@@ -8,6 +8,15 @@
 
     {% if user.is_authenticated %}
         Hallo {{ user.username }}
+
+        <div>
+            <p>
+                Dein Vorname: {{ user.first_name }}
+                <br>
+                Dein Nachname: {{ user.last_name }}
+            </p>
+        </div>
+
     {% else %}
         Du bist nicht authentifiziert.
     {% endif %}
