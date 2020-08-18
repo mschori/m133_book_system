@@ -13,6 +13,11 @@ def home(request):
 
 
 def signup(request):
+    """
+    View for user-signup.
+    :param request: request from user
+    :return: rendered signup.html
+    """
     form = UserCreationForm()
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
