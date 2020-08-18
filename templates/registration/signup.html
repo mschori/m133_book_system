@@ -7,88 +7,78 @@
 <!-- Content -->
 {% block content %}
 
-    {#    {% if form.errors %}#}
-    {#        {% for field in form %}#}
-    {#            {% for error in field.errors %}#}
-    {#                <div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">#}
-    {#                    {{ error|escape }}#}
-    {#                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">#}
-    {#                        <span aria-hidden="true">&times;</span>#}
-    {#                    </button>#}
-    {#                </div>#}
-    {#            {% endfor %}#}
-    {#        {% endfor %}#}
-    {#    {% endif %}#}
-    {##}
-    {#    <div class="row">#}
-    {#        <div class="col-6">#}
-    {#            <form method="post">#}
-    {#                {% csrf_token %}#}
-    {##}
-    {#                <div class="form-group">#}
-    {#                    <label for="{{ form.username.id_for_label }}"><b>Username</b></label>#}
-    {#                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}"#}
-    {#                           name="{{ form.username.html_name }}"#}
-    {#                           placeholder="Enter username" required>#}
-    {#                    {% if form.username.errors %}#}
-    {#                        <small class="form-text text-alert">{{ form.username.errors.0 }}</small>#}
-    {#                    {% endif %}#}
-    {#                </div>#}
-    {##}
-    {#                <div class="form-group">#}
-    {#                    <label for="{{ form.password1.id_for_label }}"><b>Password</b></label>#}
-    {#                    <input type="password" class="form-control" id="{{ form.password1.id_for_label }}"#}
-    {#                           name="{{ form.password1.html_name }}"#}
-    {#                           placeholder="Enter password" required>#}
-    {#                    {% if form.password1.errors %}#}
-    {#                        <small class="form-text text-alert">{{ form.password1.errors.0 }}</small>#}
-    {#                    {% endif %}#}
-    {#                </div>#}
-    {##}
-    {#                <div class="form-group">#}
-    {#                    <label for="{{ form.password2.id_for_label }}"><b>Repeat Password</b></label>#}
-    {#                    <input type="password" class="form-control" id="{{ form.password2.id_for_label }}"#}
-    {#                           name="{{ form.password2.html_name }}"#}
-    {#                           placeholder="Repeat password" required>#}
-    {#                    {% if form.password2.errors %}#}
-    {#                        <small class="form-text text-alert">{{ form.password2.errors.0 }}</small>#}
-    {#                    {% endif %}#}
-    {#                </div>#}
-    {##}
-    {#                <button class="btn btn-info">Register now</button>#}
-    {#            </form>#}
-    {#        </div>#}
-    {##}
-    {#        <div class="col">#}
-    {#            <div class="alert alert-info" role="alert">#}
-    {#                <h4 class="alert-heading">Username Rules</h4>#}
-    {#                <p>#}
-    {#                    Required. 150 characters or fewer. Letters,#}
-    {#                    digits and#}
-    {#                    @/./+/-/_ only.#}
-    {#                </p>#}
-    {#            </div>#}
-    {##}
-    {#            <div class="alert alert-warning" role="alert">#}
-    {#                <h4 class="alert-heading">Password Rules</h4>#}
-    {#                <ul class="">#}
-    {#                    <li>Your password can’t be too similar to your other personal information</li>#}
-    {#                    <li>Your password must contain at least 8 characters</li>#}
-    {#                    <li>Your password can’t be a commonly used password</li>#}
-    {#                    <li>Your password can’t be entirely numeric</li>#}
-    {#                </ul>#}
-    {#            </div>#}
-    {#        </div>#}
-    {#    </div>#}
+    {% if form.errors %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <div class="alert alert-danger alert-dismissible fade show mt-1" role="alert">
+                    {{ error|escape }}
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
 
+    <div class="row">
+        <div class="col-6">
+            <form method="post">
+                {% csrf_token %}
 
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}"><b>Username</b></label>
+                    <input type="text" class="form-control" id="{{ form.username.id_for_label }}"
+                           name="{{ form.username.html_name }}"
+                           placeholder="Enter username" required>
+                    {% if form.username.errors %}
+                        <small class="form-text text-alert">{{ form.username.errors.0 }}</small>
+                    {% endif %}
+                </div>
 
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}"><b>Password</b></label>
+                    <input type="password" class="form-control" id="{{ form.password1.id_for_label }}"
+                           name="{{ form.password1.html_name }}"
+                           placeholder="Enter password" required>
+                    {% if form.password1.errors %}
+                        <small class="form-text text-alert">{{ form.password1.errors.0 }}</small>
+                    {% endif %}
+                </div>
 
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}"><b>Repeat Password</b></label>
+                    <input type="password" class="form-control" id="{{ form.password2.id_for_label }}"
+                           name="{{ form.password2.html_name }}"
+                           placeholder="Repeat password" required>
+                    {% if form.password2.errors %}
+                        <small class="form-text text-alert">{{ form.password2.errors.0 }}</small>
+                    {% endif %}
+                </div>
 
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-primary" type="submit">Register now</button>
-    </form>
+                <button class="btn btn-info">Register now</button>
+            </form>
+        </div>
+
+        <div class="col">
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">Username Rules</h4>
+                <p>
+                    Required. 150 characters or fewer. Letters,
+                    digits and
+                    @/./+/-/_ only.
+                </p>
+            </div>
+
+            <div class="alert alert-warning" role="alert">
+                <h4 class="alert-heading">Password Rules</h4>
+                <ul class="">
+                    <li>Your password can’t be too similar to your other personal information</li>
+                    <li>Your password must contain at least 8 characters</li>
+                    <li>Your password can’t be a commonly used password</li>
+                    <li>Your password can’t be entirely numeric</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
