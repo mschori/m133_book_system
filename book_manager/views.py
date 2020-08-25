@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from .models import Author, Book
 
-# Create your views here.
+
+def show_authors(request):
+    authors = Author.objects.all()
+    return render(request, 'book_manager/show_authors.html', {'authors': authors})
