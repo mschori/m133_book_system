@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+    Authors
+{% endblock %}
+
+{% block content %}
+
+    <!-- Table Book-List -->
+    <table class="table table-hover text-center">
+        <thead>
+        <tr>
+            <th scope="col">ISBN</th>
+            <th scope="col">Title</th>
+            <th scope="col">Already read?</th>
+            <th scope="col">Authors</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for book in books %}
+            <tr>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.title }}</td>
+                <td>{% if book.read %}
+                    &#10003;
+                {% else %}
+                    &#10007;
+                {% endif %} </td>
+                <td>{{ book.authors.all|join:", " }}</td>
+                <td>Placeholder for actions</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
