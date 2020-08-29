@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+    Book
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li><b>ISBN: </b>{{ book.isbn }}</li>
+                    <li><b>Title: </b>{{ book.title }}</li>
+                    <li>{% if book.read %}
+                        <span class="text-success">Bereits gelesen</span>
+                    {% else %}
+                        <span class="text-danger">Noch nicht gelesen</span>
+                    {% endif %} </li>
+                </ul>
+                <b>Authors:</b>
+                <ul class="list-unstyled">
+                    {% for author in book.authors.all %}
+                        <li>
+                            <a href="{% url 'show_author' author.id %}">{{ author.first_name }} {{ author.last_name }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

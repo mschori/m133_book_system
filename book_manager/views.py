@@ -28,3 +28,12 @@ def show_author(request, author_id):
         messages.error(request, 'There is no author with this id!')
         return redirect(list_authors)
     return render(request, 'book_manager/show_author.html', {'author': author})
+
+
+def show_book(request, book_id):
+    try:
+        book = Book.objects.get(pk=book_id)
+    except Book.DoesNotExist:
+        messages.error(request, 'There is no book with this id!')
+        return redirect(list_books)
+    return render(request, 'book_manager/show_book.html', {'book': book})

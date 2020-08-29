@@ -28,7 +28,7 @@
                     &#10007;
                 {% endif %} </td>
                 <td>{{ book.authors.all|join:", " }}</td>
-                <td>Placeholder for actions</td>
+                <td><a href="{% url 'show_book' book.isbn %}" class="btn btn-info">Open</a></td>
             </tr>
         {% endfor %}
         </tbody>
