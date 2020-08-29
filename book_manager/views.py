@@ -17,7 +17,12 @@ def list_authors(request):
 
 def list_books(request):
     books = Book.objects.all()
-    form = BookForm(is_update=False)
+    form = BookForm()
+    if request.method == 'POST':
+        form = BookForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Book successfully created.')
     return render(request, 'book_manager/list_books.html', {'books': books, 'form': form})
 
 
@@ -32,7 +37,7 @@ def show_author(request, author_id):
         'last_name': author.last_name,
     })
     if request.method == 'POST':
-        form = AuthorForm(request.POST, request.FILES)
+        form = AuthorForm(request.POST, request.FILES, instance=author)
         if form.is_valid():
             author.first_name = form.cleaned_data['first_name']
             author.last_name = form.cleaned_data['last_name']
@@ -47,18 +52,32 @@ def show_book(request, book_id):
     except Book.DoesNotExist:
         messages.error(request, 'There is no book with this id!')
         return redirect(list_books)
-    form = BookForm(is_update=True, initial={
+    form = BookForm(initial={
         'isbn': book.isbn,
         'title': book.title,
         'read': book.read,
         'authors': [i.id for i in book.authors.all()]
     })
     if request.method == 'POST':
-        form = BookForm(request.POST, is_update=True)
+        old_book_isbn = book.isbn
+        form = BookForm(request.POST, instance=book)
         if form.is_valid():
-            book.title = form.cleaned_data['title']
-            print(book.title)
-            # for author in form.cleaned_data['authors']:
-            #     book.authors.add(Author.objects.get(pk=author.id))
+            new_book_isbn = form.cleaned_data['isbn']
+            if new_book_isbn != old_book_isbn:
+                if Book.objects.filter(isbn=new_book_isbn).exists():
+                    messages.error(request, 'This ISBN is already in use!')
+                    return redirect('show_book', book_id=book_id)
+                else:
+                    new_book = Book.objects.create(
+                        isbn=form.cleaned_data['isbn'],
+                        title=form.cleaned_data['title'],
+                        read=form.cleaned_data['read'],
+                    )
+                    new_book.authors.add(*[i.id for i in form.cleaned_data['authors'].all()])
+                    Book.objects.get(isbn=old_book_isbn).delete()
+                    messages.success(request, 'Book successfully updated.')
+                    return redirect('show_book', book_id=new_book_isbn)
+            else:
+                form.save()
             messages.success(request, 'Book successfully updated.')
     return render(request, 'book_manager/show_book.html', {'book': book, 'form': form})
