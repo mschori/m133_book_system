@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block tab_title %}
+    Author
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <ul class="list-unstyled">
+                    <li>Firstname: {{ author.first_name }}</li>
+                    <li>Lastname: {{ author.last_name }}</li>
+                </ul>
+            </div>
+            <div class="col">
+                <img src="{{ author.image.url }}"
+                     class="img-fluid" alt="">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
