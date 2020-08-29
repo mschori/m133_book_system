@@ -6,6 +6,41 @@
 
 {% block content %}
 
+    {% if form.errors %}
+        {% for error in form.errors %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ error.message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Create Modal -->
+    <div class="modal fade" id="createModal" tabindex="-1" role="dialog" aria-labelledby="createModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {{ form.as_p }}
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success">Create Author</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Image-Modals -->
     {% for author in authors %}
         <div id="imageModal-{{ author.id }}" class="modal fade" tabindex="-1" role="dialog"
@@ -20,8 +55,12 @@
         </div>
     {% endfor %}
 
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createModal">
+        Create new Author
+    </button>
+
     <!-- Table Author-List -->
-    <table class="table table-hover text-center">
+    <table class="table table-hover text-center mt-3">
         <thead>
         <tr>
             <th scope="col">Firstname</th>
