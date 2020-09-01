@@ -5,7 +5,6 @@ class Author(models.Model):
     first_name = models.CharField(max_length=255)
     last_name = models.CharField(max_length=255)
     image = models.ImageField(upload_to='authors')
-
     def __str__(self):
         return '{} {}'.format(self.first_name, self.last_name)
 
