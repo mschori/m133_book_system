@@ -2,8 +2,10 @@ from django.shortcuts import render, redirect
 from .models import Author, Book
 from .forms import AuthorForm, BookForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
+@login_required()
 def list_authors(request):
     authors = Author.objects.all()
     form = AuthorForm()
@@ -15,6 +17,7 @@ def list_authors(request):
     return render(request, 'book_manager/list_authors.html', {'authors': authors, 'form': form})
 
 
+@login_required()
 def list_books(request):
     books = Book.objects.all()
     form = BookForm()
@@ -26,6 +29,7 @@ def list_books(request):
     return render(request, 'book_manager/list_books.html', {'books': books, 'form': form})
 
 
+@login_required()
 def show_author(request, author_id):
     try:
         author = Author.objects.get(pk=author_id)
@@ -46,6 +50,7 @@ def show_author(request, author_id):
     return render(request, 'book_manager/show_author.html', {'author': author, 'form': form})
 
 
+@login_required()
 def show_book(request, book_id):
     try:
         book = Book.objects.get(pk=book_id)
@@ -81,3 +86,28 @@ def show_book(request, book_id):
                 form.save()
             messages.success(request, 'Book successfully updated.')
     return render(request, 'book_manager/show_book.html', {'book': book, 'form': form})
+
+
+@login_required()
+def delete_author(request, author_id):
+    try:
+        author = Author.objects.get(pk=author_id)
+        if Book.objects.filter(authors=author):
+            messages.error(request, 'This author has still books registered.')
+        else:
+            author.delete()
+            messages.success(request, 'Author successfully deleted.')
+    except Author.DoesNotExist:
+        messages.error(request, 'There is no author with this ID.')
+    return redirect('authors')
+
+
+@login_required()
+def delete_book(request, book_id):
+    try:
+        book = Book.objects.get(isbn=book_id)
+        book.delete()
+        messages.success(request, 'Book successfully deleted.')
+    except Book.DoesNotExist:
+        messages.error(request, 'There is no book with this ISBN.')
+    return redirect('books')

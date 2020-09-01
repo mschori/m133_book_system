@@ -70,7 +70,10 @@
                     &#10007;
                 {% endif %} </td>
                 <td>{{ book.authors.all|join:", " }}</td>
-                <td><a href="{% url 'show_book' book.isbn %}" class="btn btn-info">Open</a></td>
+                <td>
+                    <a href="{% url 'show_book' book.isbn %}" class="btn btn-info">Open</a>
+                    <a href="{% url 'delete_book' book.isbn %}" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>

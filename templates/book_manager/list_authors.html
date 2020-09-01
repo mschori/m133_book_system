@@ -83,7 +83,10 @@
                         Show image
                     </button>
                 </td>
-                <td><a href="{% url 'show_author' author.id %}" class="btn btn-info">Open</a></td>
+                <td>
+                    <a href="{% url 'show_author' author.id %}" class="btn btn-info">Open</a>
+                    <a href="{% url 'delete_author' author.id %}" class="btn btn-danger">Delete</a>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
