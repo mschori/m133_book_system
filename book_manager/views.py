@@ -92,7 +92,7 @@ def show_book(request, book_id):
 def delete_author(request, author_id):
     try:
         author = Author.objects.get(pk=author_id)
-        if Book.objects.filter(authors=author):
+        if Book.objects.filter(authors=author).exists():
             messages.error(request, 'This author has still books registered.')
         else:
             author.delete()
